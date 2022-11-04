@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'derivee/deriveereturn.css' %}">
+{% endblock css %}
+
+{% block contenu %}
+
+<div class="all-contenu">
+    <div class="div1">
+        <div class="derivee-pre">
+            <div class="resultat">
+                <p></p>
+                <div class="btns">
+                    <button class="btn-stepbystep"></button>
+                    <button class="btn-infofonction"></button>
+                </div>
+            </div>
+            <div class="autre-ecriture">
+                <h1>Autre type d'écriture</h1>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+        <div class="graphique">
+            {% if 'graph' in data %}
+                {{ data.graph|safe }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="div2">
+        <div class="derivee-sec">
+            <div class="derivee-2"></div>
+            <div class="derivee-3"></div>
+        </div>
+        <div class="dessin"></div>
+    </div>
+</div>
+{% endblock contenu %}

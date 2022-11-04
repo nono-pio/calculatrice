@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block contenu %}
+<h1>fonction</h1>
+
+<form action = "" method = "POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+
+{% if 'graph' in data %}
+    {{ data.graph|safe }}
+{% endif %}
+
+{% endblock contenu %}

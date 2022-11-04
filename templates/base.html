@@ -1,0 +1,48 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice nono</title>
+    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <div class="banner">
+        <svg class="banner-bg" width="1440" height="343" viewBox="0 0 1440 343" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M347.5 340C181.5 356 89 304.359 0 145.359V0H1440V298.5C1440 298.5 1361.5 347.5 1253.5 324C1145.5 300.5 1052 202 918.5 202C785 202 513.5 324 347.5 340Z" fill="#FDFF8D"/>
+            <path d="M252.5 144C191.5 124 50.5 228 23.5 184.5L0 145V0H1440V298.5C1440 298.5 1358 343 1266 326C1174 309 1089.5 244.5 996 211C902.5 177.5 804 158 764 158C724 158 683 160 536.5 199C390 238 313.5 164 252.5 144Z" fill="#FBB54C" fill-opacity="0.46"/>
+            <path d="M1158 117.5C1013 53 895 146.5 828.5 146.5C762 146.5 683.5 62 558 87C432.5 112 407 0 407 0H1440V182C1440 182 1303 182 1158 117.5Z" fill="#FF9548" fill-opacity="0.46"/>
+            <path d="M112 93C57 91.8923 12 71.5 0 0H1440V73C1395 60.5 1380 1.5 1335 1.5C1290 1.5 1255.5 48 1170.5 60.5C1085.5 73 976 53 925 73C874 93 847.225 103.5 780.5 103.5C713.775 103.5 634 20 532.5 20C431 20 167 94.1077 112 93Z" fill="#EF4C19" fill-opacity="0.6"/>
+        </svg>
+        <div class="header">
+            <h1>Nocalk</h1>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Math
+                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1.5L7 7.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </li>
+                <li>Cours
+                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1.5L7 7.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>                        
+                </li>
+                <li><a href="{% url 'compte' %}">Compte</a></li>
+            </ul>
+            <svg class="icon-user" width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M59.2667 58.5667H10.9667C10.9667 58.5667 21.4667 69.5333 34.5334 69.5333C47.6001 69.5333 59.2667 58.5667 59.2667 58.5667Z" fill="white"/>
+                <path d="M34 34C40.6274 34 46 28.6274 46 22C46 15.3726 40.6274 10 34 10C27.3726 10 22 15.3726 22 22C22 28.6274 27.3726 34 34 34Z" fill="white"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M34 11C27.9249 11 23 15.9249 23 22C23 28.0751 27.9249 33 34 33C40.0751 33 45 28.0751 45 22C45 15.9249 40.0751 11 34 11ZM21 22C21 14.8203 26.8203 9 34 9C41.1797 9 47 14.8203 47 22C47 29.1797 41.1797 35 34 35C26.8203 35 21 29.1797 21 22Z" fill="black"/>
+                <path d="M58.5333 59V52C58.5333 48.287 57.255 44.726 54.9796 42.1005C52.7041 39.475 49.618 38 46.4 38H22.1333C18.9154 38 15.8292 39.475 13.5538 42.1005C11.2783 44.726 10 48.287 10 52V59" fill="white"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7981 41.4456C15.2464 38.6206 18.6002 37 22.1333 37H46.4C49.9331 37 53.287 38.6206 55.7352 41.4456C58.1796 44.266 59.5333 48.0643 59.5333 52V59C59.5333 59.5523 59.0856 60 58.5333 60C57.981 60 57.5333 59.5523 57.5333 59V52C57.5333 48.5096 56.3304 45.186 54.2239 42.7554C52.1213 40.3293 49.3028 39 46.4 39H22.1333C19.2305 39 16.4121 40.3293 14.3095 42.7554C12.2029 45.186 11 48.5096 11 52V59C11 59.5523 10.5523 60 10 60C9.44772 60 9 59.5523 9 59V52C9 48.0643 10.3537 44.266 12.7981 41.4456Z" fill="black"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M35 67C52.6731 67 67 52.6731 67 35C67 17.3269 52.6731 3 35 3C17.3269 3 3 17.3269 3 35C3 52.6731 17.3269 67 35 67ZM35 70C54.33 70 70 54.33 70 35C70 15.67 54.33 0 35 0C15.67 0 0 15.67 0 35C0 54.33 15.67 70 35 70Z" fill="black"/>
+            </svg>
+        </div>
+    </div>
+    {% block contenu %}{% endblock contenu %}
+
+</body>
+</html>

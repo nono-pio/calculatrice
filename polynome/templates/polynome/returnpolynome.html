@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block contenu %}
+
+polynome :{% include 'outils/affichagepoly.html' with coefs=polynome.coef %}
+<br>
+racine :{{ polynome.roots }}<br>
+degree :{{ polynome.deg }}<br>
+S :{% include 'outils/affichagepoly.html' with coefs=polynome.integrales.1.coef %}+ cste<br>
+ddx :{% include 'outils/affichagepoly.html' with coefs=polynome.derivee.1.coef %}<br>
+ordonée à l'origine :{{ polynome.o_o|floatformat:-2 }}<br>
+
+{% endblock %}

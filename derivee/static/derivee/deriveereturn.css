@@ -1,0 +1,36 @@
+.all-contenu{
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.div1{
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 100%;
+}
+
+.div1 > div{
+    width: 50%;
+}
+
+.derivee-pre{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.derivee-pre >  div {
+    height: 50%;
+}
+
+.graphique{
+    background-color: purple;
+}
+
+.div2{
+    border: 2px solid blue;
+}

@@ -1,0 +1,26 @@
+{% for coef in coefs %}
+    {% if coef != 0 %}
+        {% if not forloop.first %}
+            {% if coef > 0 %}
+                <span>+</span>
+            {% endif %}
+        {% endif %}
+        {% if not coef == 1 %}
+            {% if coef == -1 %}
+                <span>-</span>
+            {% else %}
+                <span>{{ coef|floatformat:"-2" }}</span>
+            {% endif %}
+        {% endif %}
+        {% if forloop.last %}
+            {% if coef == 1 or coef == -1 %}
+                <span>{{ coef|floatformat:"-2" }}</span>
+            {% endif %}
+        {% endif %}
+        {% if forloop.revcounter0 == 1  %}
+            <span>x</span>
+        {% elif forloop.revcounter0 > 1 %}
+            <span>x<sup>{{ forloop.revcounter0 }}</sup></span>
+        {% endif %}
+    {% endif %}
+{% endfor %}

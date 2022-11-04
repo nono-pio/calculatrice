@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block contenu %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <span>username</span>
+    <input type="text" name="username">
+    <span>password</span>
+    <input type="password" name="password">
+    <input type="submit">
+</form>
+{% if 'error_login' in data %}
+    <span>Mot de passe ou nom d'utilisateur incorrect</span>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block contenu %}
+<h1>Polynome</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="input">
+</form>
+
+{% endblock %}
