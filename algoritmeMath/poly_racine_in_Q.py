@@ -1,6 +1,5 @@
 import numpy as np
 import fractions
-import time
 
 def diviseur(n):
     result = []
@@ -67,9 +66,12 @@ def racineInQ(poly):
 
     return result
 
-t = time.time()
-poly = np.poly1d([1,0,2,0])
+if __name__ == '__main__':
+    import time
 
-poly_r = racineInQ(poly)
-print(time.time()-t)
-print(poly_r)
+    t = time.time()
+    poly = np.poly1d([1,0,2,0])
+
+    poly_r = racineInQ(poly)
+    print(time.time()-t)
+    print(poly_r)
