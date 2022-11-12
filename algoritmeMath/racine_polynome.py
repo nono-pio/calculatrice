@@ -2,29 +2,33 @@ import numpy as np
 import math
 import fractions
 from poly_racine_in_Q import racineInQ
+from racine import rac
 
 def casSpecials(poly,coefs,deg):
-    if deg == 1: return -poly[0]/poly[1] # marche
-    elif deg == 2: # marche pas
-        delta = poly[1]**2 - 4*poly[2]*poly[0]
-        x = []
-        x.append((-poly[1]+delta**.5)/2*poly[2])
-        x.append((-poly[1]-delta**.5)/2*poly[2])
-        return x
-    elif np.array(coefs[1:-2]).astype(bool).all() == False:# marche pas
-        return pow(-poly[0]/poly[deg],1/deg)
-
-    a = pow(poly[0],1/deg)
-    if a != 'nan' and type(a) not in (int,float): # marche un peu
-        patern = [math.comb(deg,i)*pow(a,i) for i in range(deg + 1)]
-        if patern == coefs:
-            return -a
+    #racine de polynome de degrée 1: -b/a
+    if deg == 1:
+        return -poly[0]/poly[1]
+    #racine de polynome de degrée 2: (-b+-rac(b^2-4ac))/2a
+    elif deg == 2:
+        a, b, c = coefs
+        delta = pow(b,2) - 4*a*c
+        _bsur2a = -b/(2*a)
+        if delta > 0:
+            return [_bsur2a+pow(delta,.5)/(2*a),_bsur2a-pow(delta,.5)/(2*a)]
+        elif delta == 0:
+            return [_bsur2a]*2
+        else:
+            return [_bsur2a+1j*pow(-delta,.5)/(2*a),_bsur2a-1j*pow(-delta,.5)/(2*a)]
+    #racine d'un polynome de la forme x^n+a: rac_n(-a)
+    elif np.array(coefs[1:-2]).astype(bool).all() == False:
+        return list(rac(-poly[0]/poly[deg], n=deg ))
 
 def racine(poly):
 
     #initiation des variables
     coefs = list(poly.c)
     deg = len(coefs) - 1
+    listDeg = np.nonzero(coefs[::-1])[0]
 
     listRacines = []
 
@@ -42,8 +46,19 @@ def racine(poly):
     #si cas spécials x^10-2  x-2x+4 deg=1,2
     listRacines.append(casSpecials(poly,coefs,deg))
 
+    #réduction du polynome
+    #polynome facteur x x^2+x
+    if listDeg[0]!=0:
+        listRacines += [0] * listDeg[0]
+        poly = (poly/([1]+[0]*listDeg[0]))[0]
+    #change world x --> y
+    if np.lcm(listDeg)!=0:
+        action = {'world y':np.lcm(listDeg)}
+        new_poly = list(poly.c)[::np.lcm(listDeg)]
+        poly = np.poly1d(new_poly)
+
 
     return listRacines
-print()
-p = np.poly1d([1,2])
-print(racine(p))
+
+p = np.poly1d([1,2,0])
+racine(p)
