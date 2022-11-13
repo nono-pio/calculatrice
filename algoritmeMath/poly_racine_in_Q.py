@@ -1,5 +1,4 @@
 import numpy as np
-import fractions
 
 def diviseur(n):
     result = []
@@ -10,27 +9,11 @@ def diviseur(n):
     result.append(n)
 
     return result
-'''
-a faire:
--optimiser
-'''
+
 def racineInQ(poly):
 
     #initialisation variable
     coef = list(poly.c)
-    if len(coef) == 1:
-        return 'error'
-
-    #ppmc des dénominateurs des float de coef
-    listDenominator = []
-    for c in coef:
-        frac = fractions.Fraction(c).limit_denominator()    
-        listDenominator.append(frac.denominator)
-    ppmc = np.lcm.reduce(listDenominator)
-
-    #mult poly par le ppmc pour que chaque coef soit des entier
-    poly = poly * ppmc
-    coef = list(poly.c.astype(int))
 
     #diviseur du premier et du dernier coefficient
     p = diviseur(abs(coef[-1]))
@@ -64,14 +47,4 @@ def racineInQ(poly):
         else:
             r += 1
 
-    return result
-
-if __name__ == '__main__':
-    import time
-
-    t = time.time()
-    poly = np.poly1d([1,0,2,0])
-
-    poly_r = racineInQ(poly)
-    print(time.time()-t)
-    print(poly_r)
+    return result, poly

@@ -20,7 +20,7 @@ def casSpecials(poly,coefs,deg):
         else:
             return [_bsur2a+1j*pow(-delta,.5)/(2*a),_bsur2a-1j*pow(-delta,.5)/(2*a)]
     #racine d'un polynome de la forme x^n+a: rac_n(-a)
-    elif np.array(coefs[1:-2]).astype(bool).all() == False:
+    elif ~np.any(coefs[1:-2]):
         return list(rac(-poly[0]/poly[deg], n=deg ))
 
 def racine(poly):
@@ -44,7 +44,9 @@ def racine(poly):
     coefs = list(poly.c)
     
     #si cas spécials x^10-2  x-2x+4 deg=1,2
-    listRacines.append(casSpecials(poly,coefs,deg))
+    rac = casSpecials(poly,coefs,deg)
+    if rac != None:
+        listRacines.append()
 
     #réduction du polynome
     #polynome facteur x x^2+x
@@ -52,13 +54,15 @@ def racine(poly):
         listRacines += [0] * listDeg[0]
         poly = (poly/([1]+[0]*listDeg[0]))[0]
     #change world x --> y
-    if np.lcm(listDeg)!=0:
-        action = {'world y':np.lcm(listDeg)}
-        new_poly = list(poly.c)[::np.lcm(listDeg)]
+    if np.gcd.reduce(listDeg)!=0:
+        action = {'world y':np.gcd.reduce(listDeg)}
+        new_poly = list(poly.c)[::np.gcd.reduce(listDeg)]
         poly = np.poly1d(new_poly)
+        print(action)
+    #Théormème 1 div x-a/b racines dans l'ensemble Q En cours de test
+    #racineDansQ, poly = racineInQ(poly)
 
+    return listRacines, poly #, racineDansQ
 
-    return listRacines
-
-p = np.poly1d([1,2,0])
-racine(p)
+p = np.poly1d([])
+print(racine(p))
