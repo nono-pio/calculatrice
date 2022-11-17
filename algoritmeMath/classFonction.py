@@ -1,10 +1,14 @@
+global cte, variables
+cte = (int, float, complex)
+variables = ('x','t','y')
+
 def fx_isConstant(*args):
     for arg in args:
         ty = type(arg)
         if ty in (int,float):
             pass
         elif ty == str:
-            if arg in ('x','y','t'):
+            if arg in variables:
                 return False
         elif ty == list:
             if all([fx_isConstant(a) for a in arg]) == False:
@@ -19,8 +23,31 @@ class baseFonction():
         return add(self, added)
 
     def __iadd__(self, added):
-        #self = add(self, added)
-        pass
+        return add(self, added)
+    
+    def __mul__(self, timed):
+        return product(self, timed)
+    
+    def __imul__(self, timed):
+        return product(self, timed)
+    
+    def __div__(self, divided):
+        return divide(self, divided)
+    
+    def __idiv__(self, divided):
+        return divide(self, divided)
+    
+    def __pow__(self, pow):
+        return power(self, pow)
+    
+    def __ipow__(self, pow):
+        return power(self, pow)
+    
+    def __pos__(self):
+        return self
+    
+    def __neg__(self):
+        return product(-1,self)
 
 class add():
     def __init__(self, *args):
@@ -37,6 +64,19 @@ class add():
     def __str__(self) -> str:
         result = [str(added) for added in self.value]
         return " + ".join(result)
+    
+    def ddx(self): #marche pas si str
+        result = []
+        for value in self.value:
+            if type(value) in cte:
+                continue
+            elif value.isConstant:
+                continue
+            else:
+                result.append(value.ddx)
+    
+        if len(result) == 0: return 0
+        return add(result)
 
 class product():
     def __init__(self,*args):
@@ -53,6 +93,24 @@ class product():
     def __str__(self) -> str:
         result = [str(prod) for prod in self.value]
         return " * ".join(result)
+
+    def ddx(self): #marche pas si str
+        a = []
+        variable = []
+        for value in self.value:
+            if type(value) in cte:
+                a.append(value)
+            elif value.isConstant:
+                a.append(value)
+            else:
+                variable.append(value)
+        
+        if len(variable) == 0: return 0
+        return product(a,add([product(vari.ddx(), [x for x in variable if x != vari]) for vari in variable]))
+
+if __name__ =='__main__':
+    x = product(3,add(1,'x'))
+    print(x.ddx())
 
 class divide():
     def __init__(self,nominator,denominator):
