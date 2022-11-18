@@ -1,7 +1,7 @@
 global cte
 cte = (int,float,complex)
 
-def isConstant(args: list):
+def isConstant(args:list):
     result = []
     for arg in args:
         try:
