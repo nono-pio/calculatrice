@@ -51,8 +51,6 @@ class add(allFonction):
         membre_droite = add(membre_droite, product(-1,membre_droite_temp))
         return membre_gauche, membre_droite
 
-
-
 class product(allFonction):
     def __init__(self,*args):
         result = []
@@ -93,6 +91,16 @@ class product(allFonction):
         self.dict_value = dict_value
         return self
 
+    def reciproque_one_variable(self, membre_droite):
+        membre_droite_temp = []
+        for val in self.value:
+            if not isConstant([val]):
+                membre_gauche = val
+            else:
+                membre_droite_temp.append(val)
+        membre_droite = divide(membre_droite, product(membre_droite_temp))
+        return membre_gauche, membre_droite
+
 class divide(allFonction):
     def __init__(self,nominator,denominator):
         self.nom = nominator
@@ -107,8 +115,17 @@ class divide(allFonction):
     def reduce(self):
         if self.den == 0: return ZeroDivisionError('Error n/0 is indefinded')
         elif self.den == 1: return self.nom
-        elif self.isConstant:
-            return Fraction(self.nom,self.den).limit_denominator().as_integer_ratio()
+        elif self.den in cte and self.nom in cte:
+            self.nom, self.den = Fraction(self.nom,self.den).limit_denominator().as_integer_ratio()
+            return self
+        else:
+            return self
+    
+    def reciproque_one_variable(self, membre_droite):
+        if isConstant([self.nom]):
+            return self.den, divide(self.nom, membre_droite)
+        else:
+            return self.nom, product(self.den, membre_droite)
 
 class power(allFonction):
     def __init__(self, base, pow):
@@ -132,5 +149,14 @@ class power(allFonction):
             return 1
         elif self.pow == 1:
             return self.base
-        elif self.isConstant:
+        elif  self.base in cte and self.pow in cte:
             return self.base ** self.pow
+        else:
+            return self
+        
+    def reciproque_one_variable(self, membre_droite):
+        if isConstant([self.pow]):
+            return self.base, power(membre_droite,divide(1,self.pow))
+        else:
+            from .classFonction import log
+            return self.pow, log(membre_droite, self.base)
