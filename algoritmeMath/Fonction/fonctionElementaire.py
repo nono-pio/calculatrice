@@ -1,9 +1,9 @@
 from collections import Counter
 from fractions import Fraction
 
-from .function_annexe import *
+from .roots_fonctions import *
 
-class add():
+class add(allFonction):
     def __init__(self, *args):
         result = []
         for arg in args:
@@ -26,7 +26,7 @@ class add():
         #splits values
         for val in self.value:
             if type(val) in cte: dict_value['cte'] += val
-            elif isConstant(val): dict_value['cte_func'].append(val)
+            elif isConstant([val]): dict_value['cte_func'].append(val)
             else: dict_value['variable'].append(val)
         
         #make coef of values
@@ -38,9 +38,22 @@ class add():
             return dict_value['cte']
 
         #return to self
-        return dict_value
+        self.dict_value = dict_value
+        return self
 
-class product():
+    def reciproque_one_variable(self, membre_droite):
+        membre_droite_temp = []
+        for val in self.value:
+            if not isConstant([val]):
+                membre_gauche = val
+            else:
+                membre_droite_temp.append(val)
+        membre_droite = add(membre_droite, product(-1,membre_droite_temp))
+        return membre_gauche, membre_droite
+
+
+
+class product(allFonction):
     def __init__(self,*args):
         result = []
         for arg in args:
@@ -63,7 +76,7 @@ class product():
         #splits values
         for val in self.value:
             if type(val) in cte: dict_value['cte'] *= val
-            elif isConstant(val): dict_value['cte_func'].append(val)
+            elif isConstant([val]): dict_value['cte_func'].append(val)
             else: dict_value['variable'].append(val)
         
         #make coef of values
@@ -77,12 +90,14 @@ class product():
             return 0
 
         #return to self
-        return dict_value
+        self.dict_value = dict_value
+        return self
 
-class divide():
+class divide(allFonction):
     def __init__(self,nominator,denominator):
         self.nom = nominator
         self.den = denominator
+        self.value = [nominator, denominator]
 
         self.isConstant = isConstant([nominator, denominator])
     
@@ -95,10 +110,11 @@ class divide():
         elif self.isConstant:
             return Fraction(self.nom,self.den).limit_denominator().as_integer_ratio()
 
-class power():
+class power(allFonction):
     def __init__(self, base, pow):
         self.pow = pow
         self.base = base
+        self.value = [base, pow]
 
         self.isConstant = isConstant([base, pow])
     

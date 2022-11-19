@@ -1,7 +1,14 @@
 from .fonctionElementaire import *
-from .function_annexe import *
+from .roots_fonctions import *
 
-class baseFonction():
+'''
+A faire:
+- reduce()
+- reciproque()
+- self.value exemple: base, exposant --> [base, exposant]
+'''
+
+class baseFonction(allFonction):
     def __add__(self,added):
         return add(self, added)
 
@@ -36,9 +43,7 @@ class exp(baseFonction):
     def __init__(self, x, base='e'):
         if base == 'e':
             self.x = x
-        else:
-            #return power(base,x)
-            pass
+        self.value = [x]
 
         self.isConstant = isConstant(x)
     

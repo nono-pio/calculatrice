@@ -1,9 +1,10 @@
 from Fonction.classFonction import *
-from collections import Counter
+from equation import equation
 
-a = add(1,2).reduce()
-b = product(1,0).reduce()
-c = divide('x',0).reduce()
-d = power(8,8).reduce()
+mg = add('x',4)
+md = 6
 
-print(a,b,c,d)
+print(equation(mg, md)['x'])
+
+x = add(6,product(-1,4))
+print(x.reduce())
